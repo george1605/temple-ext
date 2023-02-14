@@ -5,6 +5,10 @@ public class MACAddr {
   U8 info[6];
 };
 
+public class IPv4 {
+  U8 info[4];
+};
+
 public class IGP {
   U8 gap[12];
 };
@@ -23,8 +27,18 @@ public class EthFrame {
 };
 
 public class IPHeader {
-  // smth here
+  U8 vers_ihl;
+  U8 tos;
+  U16 length;
+  U16 ident;
+  U16 flags_off;
+  U8 ttl;
 };
+
+U8 NetIPValid(IpHeader* hdr)
+{
+  return (hdr->ttl != 0); 
+}
 
 U0 NetSendPack(EthFrame* eth)
 {
@@ -32,3 +46,4 @@ U0 NetSendPack(EthFrame* eth)
     return;
   NetWrite((U8*)eth, sizeof(EthFrame) + strlen(eth->payload));
 }
+
